@@ -29,8 +29,28 @@
         */
         //getting context to 2d canvas
         var ctx = canvas.getContext('2d');
-        ctx.fillRect(10, 10, 100, 100);
 
+        ctx.fillStyle = 'green'; //default color is black
+        ctx.fillRect(10, 10, 100, 100); /*x, y, width, height*/
+
+        ctx.strokeStyle = '#f00';
+        ctx.strokeRect(200, 10, 100, 100);
+
+        ctx.fillStyle = 'rgb(0, 0, 255)';
+        ctx.beginPath();
+        ctx.arc(400, 60, 50, 0, Math.PI*2);//x, y, angle1, angle2 0 means right
+        ctx.fill();
+
+        ctx.strokeStyle = 'purple';
+        ctx.beginPath();
+        ctx.arc(550, 60, 50, 0, Math.PI*2);//x, y, angle1, angle2 0 means right
+        ctx.stroke();
+
+        ctx.fillStyle = 'pink';
+        ctx.beginPath();
+        ctx.arc(700, 60, 50, 0, Math.PI/2);//x, y, angle1, angle2 0 means right
+        ctx.lineTo(700, 60);
+        ctx.fill();        
     </script>
 
 </body>
