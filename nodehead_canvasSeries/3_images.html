@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Images</title>
+</head>
+<body>
+    <!-- <div id="image">
+
+    </div> -->
+    <canvas id="canvas" style="height: 600px; width: 800px; border: 1px solid;">
+        Sorry, your browser does not support the canvas tag.
+    </canvas>
+
+    <script>
+        //cache a reference to the html element
+        var canvas = document.getElementById('canvas');
+        
+        //set drawing surface dimensions to match the canvas
+        canvas.width = canvas.scrollWidth;
+        canvas.height = canvas.scrollHeight;
+        
+        //Get a reference to the 2d drawing context/ api
+        var ctx = canvas.getContext('2d');
+
+        function drawRotatedImage(ctx, image, x, y, width, height, rotation) {
+            //calculate half of width and height
+
+            var halfWidth = width / 2;
+            var halfHeight = height / 2;
+
+            ctx.save();
+
+            ctx.translate(x + halfWidth, y + halfHeight);
+            ctx.rotate(rotation); //rotation is radian value
+            ctx.drawImage(image, -halfWidth, -halfHeight, width, height);
+
+            ctx.restore(); 
+        }
+
+        var image = new Image();
+        image.src = './images.png';
+
+        // document.getElementById('image').appendChild(image);
+
+        function draw(ctx, image) {
+
+            if (!image.complete) {
+                setTimeout(function(){
+                    draw(ctx, image);
+                }, 10);
+                return;
+            }
+            
+            ctx.drawImage(image, 20, 20, 300, 160); //image obj, x, y, height, width
+            drawRotatedImage(ctx, image, 420, 20, 300, 160, Math.PI / 4);
+            drawRotatedImage(ctx, image, 20, 220, 300, 160, 0);
+            drawRotatedImage(ctx, image, 420, 220, 300, 160, Math.PI / 4);
+            drawRotatedImage(ctx, image, 20, 420, 300, 160, Math.PI);
+            drawRotatedImage(ctx, image, 420, 420, 300, 160, Math.PI / 2);
+        }
+        
+        draw(ctx, image);
+    </script>
+</body>
+</html>
