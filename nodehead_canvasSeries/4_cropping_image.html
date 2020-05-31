@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cropping images</title>
+</head>
+<body>
+    <canvas id="canvas" style="border: 1px solid; width: 800px; height: 600px">
+        Sorry, your browser does not support the canvas tag.
+    </canvas>
+
+    <script>
+        //cache a reference to the html element
+        var canvas = document.getElementById("canvas");
+
+        //set drawing surface dimensions to match the canvas
+        canvas.width = canvas.scrollWidth;
+        canvas.height = canvas.scrollHeight;
+
+        //get a reference to the 2d drawing context / api
+        var ctx = canvas.getContext('2d');
+
+        //create a new image object
+        var image = new Image();
+        image.src="images.png";
+        
+        image.onload = function() {
+            //image, srcX, srcY, srcWidth, x, y, width, height
+            ctx.drawImage(image, 0, 0, image.naturalWidth/2, image.naturalHeight/2, 10, 10, 198, 108); 
+        }
+    </script>
+
+</body>
+</html>
