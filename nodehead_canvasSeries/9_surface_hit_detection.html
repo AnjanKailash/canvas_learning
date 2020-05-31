@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Surface Hit Detection</title>
+</head>
+<body>
+    <canvas id="canvas" style="width: 800px; height: 600px; border: 1px solid">
+        Sorry, your browser does not support the canvas tag
+    </canvas>
+
+    <script>
+        //cache a reference to the html element
+        var canvas = document.getElementById('canvas');
+
+        //set the drawing surface dimensions to match the canvas
+        canvas.width = canvas.scrollWidth;
+        canvas.height = canvas.scrollHeight;
+
+        //Get a reference to the 2nd drawing context/ api
+        var ctx = canvas.getContext('2d');
+
+        // drawing a quadrant
+        ctx.beginPath();
+        ctx.arc(150, 150, 100, 0, Math.PI / 2);
+        ctx.lineTo(150, 150);
+        ctx.fill();
+        ctx.addHitRegion({id: 'quadrant'});
+
+        ctx.beginPath();
+        ctx.moveTo(400, 50);
+        ctx.lineTo(500, 250);
+        ctx.lineTo(300, 250);
+        ctx.fill();
+        ctx.addHitRegion({id: 'triangle'});
+
+        canvas.addEventListener('mousemove', function(e) {
+            if (e.region) {
+                console.log(e.region+ ' is hit!'); //enable the experimental canvas features
+            }
+        })
+
+    </script>
+</body>
+</html>
