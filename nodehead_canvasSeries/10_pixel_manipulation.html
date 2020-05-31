@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Surface Hit Detection</title>
+</head>
+<body>
+    <canvas id="canvas" style="width: 800px; height: 600px; border: 1px solid">
+        Sorry, your browser does not support the canvas tag
+    </canvas>
+
+    <script>
+        //cache a reference to the html element
+        var canvas = document.getElementById('canvas');
+
+        //set the drawing surface dimensions to match the canvas
+        canvas.width = canvas.scrollWidth;
+        canvas.height = canvas.scrollHeight;
+
+        //Get a reference to the 2nd drawing context/ api
+        var ctx = canvas.getContext('2d');
+
+       var image = new Image();
+
+       image.onload = function() {
+
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        var pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        
+        for (var i =0; i<pixelData.data.length; i+=4) {
+            //pixelData.data[i]=0; //removes reds
+            //pixelData.data[i+1]=0; //removes greens
+            //pixelData.data[i+2]=0; //removes blues
+
+            //convert to black and white
+            //var avg = (pixelData.data[i] + pixelData.data[i+1] + pixelData.data[i+2])/3;
+            //pixelData.data[i] = avg;
+            //pixelData.data[i+1] = avg;
+            //pixelData.data[i+2] = avg;
+
+            //other better way of black and wight
+            var bw = 0.2 * pixelData.data[i] + .72 * pixelData.data[i+1] + .07 * pixelData.data[i+2];
+
+            pixelData.data[i] = bw;
+            pixelData.data[i+1] = bw;
+            pixelData.data[i+2] = bw;
+        }
+
+            ctx.putImageData(pixelData, 0, 0);
+       }
+
+       image.src = './images.png';
+
+    </script>
+</body>
+</html>
