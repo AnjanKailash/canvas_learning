@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hit Detection</title>
+</head>
+<body>
+    <canvas id="canvas" style="width: 800px; height: 600px; border: 1px solid">
+        Sorry, your browser does not support the canvas tag
+    </canvas>
+
+    <script>
+        //cache a reference to the html element
+        var canvas = document.getElementById('canvas');
+
+        //set the drawing surface dimensions to match the canvas
+        canvas.width = canvas.scrollWidth;
+        canvas.height = canvas.scrollHeight;
+
+        //Get a reference to the 2nd drawing context/ api
+        var ctx = canvas.getContext('2d');
+
+        var Circle = function(x, y, radius) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+        }
+
+        Circle.prototype.isHitBy = function(x, y) {
+            var distance = Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
+            return distance <= this.radius;
+        }
+
+        var Rectangle = function(x, y, width, height) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+
+        Rectangle.prototype.isHitBy = function (x, y) {
+            return (x>=this.x && x<=this.x+this.width && y>= this.y && y<= this.y+this.height);
+        }
+
+        //create shapes (and draw)
+        var circle = new Circle(150, 150, 100);
+        var rectangle = new Rectangle(250, 50, 100, 200);
+
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+
+        canvas.addEventListener('mousemove', function(e) {
+            
+            var canvasBounds = canvas.getBoundingClientRect();
+
+            var clickX = e.pageX - canvasBounds.left;
+            var clickY = e.pageY - canvasBounds.top;
+
+            if (circle.isHitBy(clickX, clickY)) {
+                console.log('Circle Hit')
+            } 
+
+            if (circle.isHitBy(clickX, clickY)) {
+                console.log('rectangle hit');
+            }
+
+        });
+
+    </script>
+</body>
+</html>
